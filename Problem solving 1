@@ -1,0 +1,103 @@
+#1
+def count_vowels(s):
+    vowels = "AEIOUaeiou"
+    total_vowels = {v: 0 for v in vowels}
+
+    for char in s:
+        if char in total_vowels:
+            total_vowels[char] += 1
+
+    count = sum(total_vowels.values())
+    return count, total_vowels
+
+string = "Guvi Geeks network private limited"
+total_count, vowel_counts = count_vowels(string)
+
+print("Total number of vowels:", total_count)
+print("Count of each vowel:")
+for vowel in sorted(vowel_counts):
+    print(vowel, ":", vowel_counts[vowel])
+
+#2
+def print_pyramid(n):
+    num = 1
+    for i in range(1, n+1):
+        for j in range(i):
+            if num <= 20:
+                print(num, end=' ')
+                num += 1
+            else:
+                break
+        print()
+
+print_pyramid(6)
+#3,4,5,7,8,9
+from collections import Counter
+
+def remove_vowels(s):
+    vowels = "AEIOUaeiou"
+    return ''.join([char for char in s if char not in vowels])
+
+def is_palindrome(s):
+    return s == s[::-1]
+
+def most_frequent_char(s):
+    return Counter(s).most_common(1)[0][0]
+
+def is_anagram(s1, s2):
+    return Counter(s1) == Counter(s2)
+
+def count_unique_chars(s):
+    return len(set(s))
+
+def count_words(s):
+    return len(s.split())
+
+def process_string(s, anagram_check):
+    s_no_vowels = remove_vowels(s)
+    palindrome_check = is_palindrome(s_no_vowels)
+    freq_char = most_frequent_char(s_no_vowels)
+    unique_char_count = count_unique_chars(s_no_vowels)
+    words_count = count_words(s)
+    anagram_check_result = is_anagram(s_no_vowels, anagram_check)
+    
+    return {
+        "string_no_vowels": s_no_vowels,
+        "is_palindrome": palindrome_check,
+        "most_frequent_character": freq_char,
+        "unique_characters_count": unique_char_count,
+        "word_count": words_count,
+        "is_anagram": anagram_check_result
+    }
+
+input_string = "Guvi Geeks network private limited"
+anagram_string = "tiviG eeksnwrk prvate lmtdd"
+
+result = process_string(input_string, anagram_string)
+print("String with no vowels:", result["string_no_vowels"])
+print("Is palindrome:", result["is_palindrome"])
+print("Most frequent character:", result["most_frequent_character"])
+print("Unique characters count:", result["unique_characters_count"])
+print("Word count:", result["word_count"])
+print("Is anagram:", result["is_anagram"])
+#6
+def longest_common_substring(s1, s2):
+    m = len(s1)
+    n = len(s2)
+    max_len = 0
+    ending_index = m
+    length = [[0] * (n + 1) for _ in range(m + 1)]
+
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if s1[i - 1] == s2[j - 1]:
+                length[i][j] = length[i - 1][j - 1] + 1
+                if length[i][j] > max_len:
+                    max_len = length[i][j]
+                    ending_index = i
+
+    return s1[ending_index - max_len: ending_index]
+s1 = "GuviGeeks"
+s2 = "GeeksForGeeks"
+result = longest_common_substring(s1, s2)
+print("Longest common substring:", result)
